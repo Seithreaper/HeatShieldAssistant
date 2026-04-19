@@ -1,41 +1,21 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Estimator from "./pages/Estimator";
-import Alliance from "./pages/Alliance";
-import Settings from "./pages/Settings";
+import React, { useState } from 'react'
+import Tabs from './components/Tabs'
+import ProductsTab from './components/ProductsTab'
+import CoverageTab from './components/CoverageTab'
+import ContainersTab from './components/ContainersTab'
+import OrderSheetTab from './components/OrderSheetTab'
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState("products")
+
   return (
-    <BrowserRouter basename="/HeatShieldAssistant">
-      <nav style={styles.nav}>
-        <Link style={styles.link} to="/">Home</Link>
-        <Link style={styles.link} to="/estimator">Estimator</Link>
-        <Link style={styles.link} to="/alliance">Alliance</Link>
-        <Link style={styles.link} to="/settings">Settings</Link>
-      </nav>
+    <>
+      <Tabs active={activeTab} onChange={setActiveTab} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/estimator" element={<Estimator />} />
-        <Route path="/alliance" element={<Alliance />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
-    </BrowserRouter>
-  );
+      {activeTab === "products" && <ProductsTab />}
+      {activeTab === "coverage" && <CoverageTab />}
+      {activeTab === "containers" && <ContainersTab />}
+      {activeTab === "order" && <OrderSheetTab />}
+    </>
+  )
 }
-
-const styles = {
-  nav: {
-    display: "flex",
-    gap: "20px",
-    padding: "15px",
-    background: "#0A1F44",
-    justifyContent: "center",
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-};
-
